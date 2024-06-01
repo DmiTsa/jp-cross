@@ -1,0 +1,31 @@
+/* temp styles */
+
+.table {
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+.cell {
+  width: 25px;
+  height: 25px;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+.noBorder {
+  border: none;
+}
+
+.number {
+  background-color: lightgray;
+}
+
+.pixel {
+  cursor: pointer;
+}
+
+.fill {
+  background-color: black;
+}
+
+/* ///////////////// */
