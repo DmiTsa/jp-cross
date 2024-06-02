@@ -1,10 +1,12 @@
-import CreateCross from "./components/CreateCross/CreateCross";
+import Field from "./components/field/Field/Field";
+// import CreateCross from "./components/CreateCross/CreateCross";
 import "./App.css";
 
 function App() {
   return (
     <div>
-      <CreateCross />
+      <Field />
+      {/* <CreateCross /> */}
     </div>
   );
 }

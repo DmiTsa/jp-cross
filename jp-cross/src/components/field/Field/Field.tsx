@@ -1,43 +1,64 @@
-import style from './Field.module.css';
+import { useState } from "react";
+import EmptyPixel from "../../parts/pixels/EmptyPixel";
+import NumberPixel from "../../parts/pixels/NumberPixel";
+import ImagePixel from "../../parts/pixels/ImagePixel";
+import { pixelType } from "../../parts/pixels/const";
+import cross from "../../types/cross";
+import style from "./Field.module.css";
 
 const Field: React.FC = () => {
+  //dev
+  const testCross: cross = {
+    id: "dd-eee",
+    name: "test",
+    hSize: 2,
+    vSize: 3,
+    hNumbers: [
+      [0, 1],
+      [2, 1],
+    ],
+    vNumbers: [
+      [0, 2],
+      [1, 1],
+      [0, 3],
+    ],
+  };
+  /////////////////////
+
+  const initPixels = new Array(testCross.vSize).fill(
+    new Array(testCross.hSize).fill(0)
+  );
+
+  const [pixels, setPixels] = useState(initPixels);
+
   return (
     <table className={style.table}>
-      <tr>
-        <td className={`${style.cell} ${style.noBorder}`}></td>
-        <td className={`${style.cell} ${style.noBorder}`}></td>
-        <td className={`${style.cell} ${style.noBorder}`}></td>
-        <td className={`${style.cell} ${style.number}`}>4</td>
-        <td className={`${style.cell} ${style.number}`}>5</td>
-      </tr>
-      <tr>
-        <td className={`${style.cell} ${style.noBorder}`}></td>
-        <td className={`${style.cell} ${style.noBorder}`}></td>
-        <td className={`${style.cell} ${style.noBorder}`}></td>
-        <td className={`${style.cell} ${style.number}`}>3</td>
-        <td className={`${style.cell} ${style.number}`}>7</td>
-      </tr>
-      <tr>
-        <td className={`${style.cell} ${style.number}`}>2</td>
-        <td className={`${style.cell} ${style.number}`}>5</td>
-        <td className={`${style.cell} ${style.number}`}>9</td>
-        <td className={`${style.cell} ${style.pixel}`}></td>
-        <td className={`${style.cell} ${style.pixel} ${style.fill}`}></td>
-      </tr>
-      <tr>
-        <td className={`${style.cell} ${style.number}`}>4</td>
-        <td className={`${style.cell} ${style.number}`}>23</td>
-        <td className={`${style.cell} ${style.number}`}>12</td>
-        <td className={`${style.cell} ${style.pixel}`}></td>
-        <td className={`${style.cell} ${style.pixel}`}></td>
-      </tr>
-      <tr>
-        <td className={`${style.cell} ${style.number}`}></td>
-        <td className={`${style.cell} ${style.number}`}>3</td>
-        <td className={`${style.cell} ${style.number}`}>22</td>
-        <td className={`${style.cell} ${style.pixel}`}></td>
-        <td className={`${style.cell} ${style.pixel}`}></td>
-      </tr>
+      {testCross.hNumbers.map((str) => {
+        return (
+          <tr>
+            {testCross.vNumbers[0].map((_el) => {
+              return <EmptyPixel />;
+            })}
+
+            {str.map((el) => {
+              return <NumberPixel>{el !== 0 ? el : ""}</NumberPixel>;
+            })}
+          </tr>
+        );
+      })}
+
+      {testCross.vNumbers.map((str) => {
+        return (
+          <tr>
+            {str.map((el) => {
+              return <NumberPixel>{el !== 0 ? el : ""}</NumberPixel>;
+            })}
+            {testCross.hNumbers[0].map((_el) => {
+              return <ImagePixel type={pixelType.empty}></ImagePixel>;
+            })}
+          </tr>
+        );
+      })}
     </table>
   );
 };
