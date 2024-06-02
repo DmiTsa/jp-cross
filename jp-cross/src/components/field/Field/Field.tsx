@@ -1,4 +1,5 @@
-import { useState } from "react";
+// import { useState } from "react";
+import { v4 as uuid } from "uuid";
 import EmptyPixel from "../../parts/pixels/EmptyPixel";
 import NumberPixel from "../../parts/pixels/NumberPixel";
 import ImagePixel from "../../parts/pixels/ImagePixel";
@@ -18,47 +19,65 @@ const Field: React.FC = () => {
       [2, 1],
     ],
     vNumbers: [
-      [0, 2],
-      [1, 1],
-      [0, 3],
+      [0, 22],
+      [10, 1],
+      [0, 31],
     ],
   };
   /////////////////////
 
-  const initPixels = new Array(testCross.vSize).fill(
-    new Array(testCross.hSize).fill(0)
-  );
+  // const initPixels = new Array(testCross.vSize).fill(
+  //   new Array(testCross.hSize).fill(0)
+  // );
 
-  const [pixels, setPixels] = useState(initPixels);
+  // const [pixels, setPixels] = useState(initPixels);
+
+  const imagePixelClickHandler = (X: number, Y: number) => {
+    console.log(X, Y);
+  };
 
   return (
     <table className={style.table}>
-      {testCross.hNumbers.map((str) => {
-        return (
-          <tr>
-            {testCross.vNumbers[0].map((_el) => {
-              return <EmptyPixel />;
-            })}
+      <tbody>
+        {testCross.hNumbers.map((str) => {
+          return (
+            <tr key={uuid()}>
+              {testCross.vNumbers[0].map((_el) => {
+                return <EmptyPixel key={uuid()} />;
+              })}
 
-            {str.map((el) => {
-              return <NumberPixel>{el !== 0 ? el : ""}</NumberPixel>;
-            })}
-          </tr>
-        );
-      })}
+              {str.map((el) => {
+                return (
+                  <NumberPixel key={uuid()}>{el !== 0 ? el : ""}</NumberPixel>
+                );
+              })}
+            </tr>
+          );
+        })}
 
-      {testCross.vNumbers.map((str) => {
-        return (
-          <tr>
-            {str.map((el) => {
-              return <NumberPixel>{el !== 0 ? el : ""}</NumberPixel>;
-            })}
-            {testCross.hNumbers[0].map((_el) => {
-              return <ImagePixel type={pixelType.empty}></ImagePixel>;
-            })}
-          </tr>
-        );
-      })}
+        {testCross.vNumbers.map((str, i) => {
+          return (
+            <tr key={uuid()}>
+              {str.map((el) => {
+                return (
+                  <NumberPixel key={uuid()}>{el !== 0 ? el : ""}</NumberPixel>
+                );
+              })}
+              {testCross.hNumbers[0].map((_el, j) => {
+                return (
+                  <ImagePixel
+                    key={uuid()}
+                    type={pixelType.empty}
+                    X={j}
+                    Y={i}
+                    click={imagePixelClickHandler}
+                  ></ImagePixel>
+                );
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
     </table>
   );
 };
