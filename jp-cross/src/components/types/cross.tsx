@@ -5,6 +5,7 @@ type cross = {
   vSize: number;
   hNumbers: number[][];
   vNumbers: number[][];
+  imagePixels: number[][];
 };
 
 export default cross;

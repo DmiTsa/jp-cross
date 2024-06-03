@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import EmptyPixel from "../../parts/pixels/EmptyPixel";
 import NumberPixel from "../../parts/pixels/NumberPixel";
@@ -12,28 +12,46 @@ const Field: React.FC = () => {
   const testCross: cross = {
     id: "dd-eee",
     name: "test",
-    hSize: 2,
-    vSize: 3,
+    hSize: 10,
+    vSize: 10,
     hNumbers: [
-      [0, 1],
-      [2, 1],
+      [0, 1, 5, 6, 1, 0, 4, 0, 0, 7],
+      [4, 1, 5, 6, 1, 0, 4, 12, 14, 7],
+      [8, 1, 5, 6, 1, 2, 4, 12, 14, 7],
     ],
     vNumbers: [
-      [0, 22],
-      [10, 1],
-      [0, 31],
+      [0, 22, 5, 6],
+      [0, 22, 5, 6],
+      [0, 0, 5, 6],
+      [0, 22, 5, 6],
+      [0, 22, 5, 6],
+      [0, 0, 5, 6],
+      [0, 22, 5, 6],
+      [0, 22, 5, 6],
+      [0, 0, 0, 6],
+      [0, 22, 5, 6],
+    ],
+    imagePixels: [
+      [1, 0],
+      [0, 1],
+      [1, 0],
     ],
   };
   /////////////////////
 
-  // const initPixels = new Array(testCross.vSize).fill(
-  //   new Array(testCross.hSize).fill(0)
-  // );
+  const initPixels = new Array(testCross.vSize).fill(
+    new Array(testCross.hSize).fill(0)
+  );
 
-  // const [pixels, setPixels] = useState(initPixels);
+  const [pixels, setPixels] = useState(initPixels);
 
   const imagePixelClickHandler = (X: number, Y: number) => {
-    console.log(X, Y);
+    const newPixels = pixels.map((str, i) => {
+      return str.map((el: number, j: number) => {
+        return i === Y && j === X ? (el !== 1 ? 1 : 0) : el;
+      });
+    });
+    setPixels(newPixels);
   };
 
   return (
@@ -63,11 +81,17 @@ const Field: React.FC = () => {
                   <NumberPixel key={uuid()}>{el !== 0 ? el : ""}</NumberPixel>
                 );
               })}
-              {testCross.hNumbers[0].map((_el, j) => {
+              {pixels[i].map((el: number, j: number) => {
                 return (
                   <ImagePixel
                     key={uuid()}
-                    type={pixelType.empty}
+                    type={
+                      el === 0
+                        ? pixelType.empty
+                        : el === 1
+                        ? pixelType.filled
+                        : pixelType.crossout
+                    }
                     X={j}
                     Y={i}
                     click={imagePixelClickHandler}
